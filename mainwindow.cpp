@@ -8,17 +8,17 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
 
-	QString str = "./Data";
+	QString str = "./Data";                               //è®¾ç½®æ–‡ä»¶è·¯å¾„
 	QByteArray ba = str.toLatin1();
 	mInfoDir = ba.data();
-	mpDicomImgPty = new DICOMPropertyData;
-	DcmReadInterface::DcmReader(mInfoDir);
-	DcmReadInterface::GetPatientInfo(*mpDicomImgPty);
-	DcmReadInterface::GetVolumeData(*mpDicomImgPty);
+	mpDicomImgPty = new DICOMPropertyData;                //åˆ›å»ºä½“ç´ æ•°æ®æŒ‡é’ˆå˜é‡
+	DcmReadInterface::DcmReader(mInfoDir);                //ä½¿ç”¨DcmReaderè½½å…¥è·¯å¾„
+	DcmReadInterface::GetPatientInfo(*mpDicomImgPty);     //èŽ·å–ç—…äººä¿¡æ¯
+	DcmReadInterface::GetVolumeData(*mpDicomImgPty);      //èŽ·å–ä½“ç´ æ•°æ®
 	
-	this->resize(800, 600);
-	CreateWdts();
-	renderWindow();
+	this->resize(800, 600);         //é‡ç½®å°ºå¯¸
+	CreateWdts();                   //åˆ›å»ºéƒ¨ä»¶
+	renderWindow();                 //é€šè¿‡ç»˜åˆ¶çª—å£ç»˜åˆ¶
 }
 
 MainWindow::~MainWindow()
@@ -88,52 +88,52 @@ void MainWindow::renderWindow()
 {
 
 #if Volume_Or_Surface_Rendering
-	mpImgImport = vtkImageImport::New();
-	mpImgImport->SetImportVoidPointer(mpDicomImgPty->ptrData);
-	mpImgImport->SetDataExtent(0, mpDicomImgPty->xSize - 1, 0, mpDicomImgPty->ySize - 1, 0, mpDicomImgPty->zSize - 1);      //ÉèÖÃÊý¾Ý´óÐ¡
-	mpImgImport->SetWholeExtent(0, mpDicomImgPty->xSize - 1, 0, mpDicomImgPty->ySize - 1, 0, mpDicomImgPty->zSize - 1);
-	mpImgImport->SetDataOrigin(0, 0, 0);               //ÉèÖÃÆðµãÎ»ÖÃ
-	mpImgImport->SetDataSpacing(mpDicomImgPty->xSpacing, mpDicomImgPty->ySpacing, mpDicomImgPty->zSpacing);          //ÉèÖÃ¼ä¸ô
+	mpImgImport = vtkImageImport::New();                                   //vtkå›¾åƒè¾“å…¥æŽ¥å£
+	mpImgImport->SetImportVoidPointer(mpDicomImgPty->ptrData);             //è®¾ç½®è¾“å…¥æŽ¥å£çš„ç©ºæŒ‡é’ˆ
+	mpImgImport->SetDataExtent(0, mpDicomImgPty->xSize - 1, 0, mpDicomImgPty->ySize - 1, 0, mpDicomImgPty->zSize - 1);      //è®¾ç½®æ•°æ®å¤§å°
+	mpImgImport->SetWholeExtent(0, mpDicomImgPty->xSize - 1, 0, mpDicomImgPty->ySize - 1, 0, mpDicomImgPty->zSize - 1);     //è®¾ç½®æ€»å¤§å°
+	mpImgImport->SetDataOrigin(0, 0, 0);               //è®¾ç½®èµ·ç‚¹ä½ç½®
+	mpImgImport->SetDataSpacing(mpDicomImgPty->xSpacing, mpDicomImgPty->ySpacing, mpDicomImgPty->zSpacing);          //è®¾ç½®é—´éš”
 	mpImgImport->Update();
 
 	mpWholeVolMapper = vtkSmartVolumeMapper::New();
 	mpWholeVolMapper->SetInputData(mpImgImport->GetOutput());
-	mpWholeVolMapper->SetBlendModeToComposite();                                     //ÉèÖÃ
-	mpWholeVolMapper->InteractiveAdjustSampleDistancesOff();                         //¹Ø±Õ½»»¥Ê½µ÷Õû²ÉÑù¾àÀë¹¦ÄÜ
-	mpWholeVolMapper->AutoAdjustSampleDistancesOff();                                //¹Ø±Õ×Ô¶¯Ìõ¼þ²ÉÑù¾àÀë¹¦ÄÜ
+	mpWholeVolMapper->SetBlendModeToComposite();                                     //è®¾ç½®
+	mpWholeVolMapper->InteractiveAdjustSampleDistancesOff();                         //å…³é—­äº¤äº’å¼è°ƒæ•´é‡‡æ ·è·ç¦»åŠŸèƒ½
+	mpWholeVolMapper->AutoAdjustSampleDistancesOff();                                //å…³é—­è‡ªåŠ¨æ¡ä»¶é‡‡æ ·è·ç¦»åŠŸèƒ½
 	mpWholeVolMapper->Update();
 
-	vtkColorTransferFunction *colorFun = vtkColorTransferFunction::New();            //ÑÕÉ«Ó³Éäº¯Êý
-	vtkPiecewiseFunction* opacityFun = vtkPiecewiseFunction::New();                  //vtkPiecewiseFunctionÀà¶¨Òå±êÁ¿ÏßÐÔ·Ö¶Îº¯Êý£¬ÆäÖ§³ÖÁ½ÖÖÉèÖÃ·½Ê½¡£µÚÒ»ÖÖÊÇÖ±½ÓÌí¼Ó¶Ïµã£¬µÚ¶þÖÖÔòÊÇÌí¼ÓÒ»ÌõÏß¶Î¡£
+	vtkColorTransferFunction *colorFun = vtkColorTransferFunction::New();            //é¢œè‰²æ˜ å°„å‡½æ•°
+	vtkPiecewiseFunction* opacityFun = vtkPiecewiseFunction::New();                  //vtkPiecewiseFunctionç±»å®šä¹‰æ ‡é‡çº¿æ€§åˆ†æ®µå‡½æ•°ï¼Œå…¶æ”¯æŒä¸¤ç§è®¾ç½®æ–¹å¼ã€‚ç¬¬ä¸€ç§æ˜¯ç›´æŽ¥æ·»åŠ æ–­ç‚¹ï¼Œç¬¬äºŒç§åˆ™æ˜¯æ·»åŠ ä¸€æ¡çº¿æ®µã€‚
 	colorFun->AddRGBPoint(-3024, 0, 0, 0, 0.5, 0.0);                        //
-	colorFun->AddRGBPoint(-16, .98, .78, .61);                              //µÚÒ»¸ö²ÎÊý±íÊ¾ÏñËØ»Ò¶ÈÖµ£¬µÚ¶þÖÁµÚËÄ¸ö²ÎÊýÎªÓ³ÉäµÄRGB·ÖÁ¿
+	colorFun->AddRGBPoint(-16, .98, .78, .61);                              //ç¬¬ä¸€ä¸ªå‚æ•°è¡¨ç¤ºåƒç´ ç°åº¦å€¼ï¼Œç¬¬äºŒè‡³ç¬¬å››ä¸ªå‚æ•°ä¸ºæ˜ å°„çš„RGBåˆ†é‡
 	colorFun->AddRGBPoint(-10, 0.0, 0.0, 0.21);
-	colorFun->AddRGBSegment(10, .99, .42, 0.1, 50, .99, .42, 0.1);          //Ç°ËÄ¸ö²ÎÊýÎªµÚÒ»¸öRGB¶Ïµã£¬ºóËÄ¸ö²ÎÊýÎªµÚ¶þ¸öRGB¶Ïµã¡£
+	colorFun->AddRGBSegment(10, .99, .42, 0.1, 50, .99, .42, 0.1);          //å‰å››ä¸ªå‚æ•°ä¸ºç¬¬ä¸€ä¸ªRGBæ–­ç‚¹ï¼ŒåŽå››ä¸ªå‚æ•°ä¸ºç¬¬äºŒä¸ªRGBæ–­ç‚¹ã€‚
 	colorFun->AddRGBPoint(60, 0.73, 0.25, 0.30, 0.49, .61);
 	colorFun->AddRGBPoint(641, .90, .82, .56, .5, 0.0);
 	colorFun->AddRGBPoint(1000, 0.91, 0.91, 0.91);
 	colorFun->AddRGBPoint(3071, 1, 1, 1, .5, 0.0);
 	opacityFun->AddPoint(-3024, 0.0, 0.5, 0.0);              //
-	opacityFun->AddPoint(-600, 0);                           //µÚÒ»¸ö²ÎÊýÎª×Ô±äÁ¿£¬ÕâÀïÖ¸»Ò¶ÈÖµ£»µÚ¶þ¸ö²ÎÊýÔòÊÇÓ³ÉäÖµ£¬ÕâÀïÖ¸²»Í¸Ã÷¶È¡£
+	opacityFun->AddPoint(-600, 0);                           //ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºè‡ªå˜é‡ï¼Œè¿™é‡ŒæŒ‡ç°åº¦å€¼ï¼›ç¬¬äºŒä¸ªå‚æ•°åˆ™æ˜¯æ˜ å°„å€¼ï¼Œè¿™é‡ŒæŒ‡ä¸é€æ˜Žåº¦ã€‚
 	opacityFun->AddPoint(-500, 0.2, .49, .61);
 	opacityFun->AddPoint(-300, 0.2);
-	opacityFun->AddSegment(-101, 0, 300, 0);                 //Ìí¼ÓÁ½¸ö¶Ïµã(-101,0)ºÍ(300,0)£¬×é³ÉÒ»ÌõÏß¶Î
+	opacityFun->AddSegment(-101, 0, 300, 0);                 //æ·»åŠ ä¸¤ä¸ªæ–­ç‚¹(-101,0)å’Œ(300,0)ï¼Œç»„æˆä¸€æ¡çº¿æ®µ
 	opacityFun->AddSegment(641, 0.5, 1000, 0.5);
 	opacityFun->AddPoint(3071, 0.0);
 
-	vtkVolumeProperty* volproperty = vtkVolumeProperty::New();         //ÓÃÓÚÉèÖÃÌå»æÖÆµÄÊôÐÔÉèÖÃ£¬¾ö¶¨Ìå»æÖÆµÄäÖÈ¾Ð§¹û
-	volproperty->SetColor(colorFun);                                   //¸Ãº¯ÊýÓÃÓÚÉèÖÃÑÕÉ«´«Êäº¯Êý
-	volproperty->SetScalarOpacity(opacityFun);                         //¸Ãº¯ÊýÓÃÓÚÉèÖÃ»Ò¶È²»Í¸Ã÷¶Èº¯Êý
-	volproperty->SetInterpolationTypeToLinear();                       //ÏßÐÔ²îÖµ
-	volproperty->ShadeOn();                  //´ò¿ªÌå»æÖÆµÄÒõÓ°Ð§¹û(Shading)
-	volproperty->SetAmbient(0.1);            //ÉèÖÃ»·¾³¹âÏµÊý
-	volproperty->SetDiffuse(0.9);            //ÉèÖÃÉ¢Éä¹âÏµÊý
-	volproperty->SetSpecular(0.2);           //ÉèÖÃ·´Éä¹âÏµÊý
-	volproperty->SetSpecularPower(10.0);     //ÉèÖÃ¸ß¹âÇ¿¶È£¬ÓÃÓÚ¿ØÖÆÌå»æÖÆµÄÍâ¹ÛÆ½»¬³Ì¶È
+	vtkVolumeProperty* volproperty = vtkVolumeProperty::New();         //ç”¨äºŽè®¾ç½®ä½“ç»˜åˆ¶çš„å±žæ€§è®¾ç½®ï¼Œå†³å®šä½“ç»˜åˆ¶çš„æ¸²æŸ“æ•ˆæžœ
+	volproperty->SetColor(colorFun);                                   //è¯¥å‡½æ•°ç”¨äºŽè®¾ç½®é¢œè‰²ä¼ è¾“å‡½æ•°
+	volproperty->SetScalarOpacity(opacityFun);                         //è¯¥å‡½æ•°ç”¨äºŽè®¾ç½®ç°åº¦ä¸é€æ˜Žåº¦å‡½æ•°
+	volproperty->SetInterpolationTypeToLinear();                       //çº¿æ€§å·®å€¼
+	volproperty->ShadeOn();                  //æ‰“å¼€ä½“ç»˜åˆ¶çš„é˜´å½±æ•ˆæžœ(Shading)
+	volproperty->SetAmbient(0.1);            //è®¾ç½®çŽ¯å¢ƒå…‰ç³»æ•°
+	volproperty->SetDiffuse(0.9);            //è®¾ç½®æ•£å°„å…‰ç³»æ•°
+	volproperty->SetSpecular(0.2);           //è®¾ç½®åå°„å…‰ç³»æ•°
+	volproperty->SetSpecularPower(10.0);     //è®¾ç½®é«˜å…‰å¼ºåº¦ï¼Œç”¨äºŽæŽ§åˆ¶ä½“ç»˜åˆ¶çš„å¤–è§‚å¹³æ»‘ç¨‹åº¦
 
 	mpVolume = vtkVolume::New();
-	mpVolume->SetMapper(mpWholeVolMapper);             //¸Ãº¯ÊýÓÃÓÚÁ¬½ÓvtkSmartVolumeMapper¶ÔÏó£¬²¢¸ù¾Ý²»Í¬µÄÌå»æÖÆËã·¨»ñÈ¡ÆäÄÚ²¿Éú³ÉµÄÍ¼ÔªÊý¾Ý¡£
-	mpVolume->SetProperty(volproperty);                //¸Ãº¯ÊýÓÃÓÚÉèÖÃvtkVolumeProperty¶ÔÏó¡£ÆäÖÐvtkVolumePropertyÓÃÀ´ÉèÖÃÌå»æÖÆµÄÑÕÉ«ºÍ²»Í¸Ã÷¶Èº¯ÊýÒÔ¼°ÒõÓ°ÐÅÏ¢¡£
+	mpVolume->SetMapper(mpWholeVolMapper);             //è¯¥å‡½æ•°ç”¨äºŽè¿žæŽ¥vtkSmartVolumeMapperå¯¹è±¡ï¼Œå¹¶æ ¹æ®ä¸åŒçš„ä½“ç»˜åˆ¶ç®—æ³•èŽ·å–å…¶å†…éƒ¨ç”Ÿæˆçš„å›¾å…ƒæ•°æ®ã€‚
+	mpVolume->SetProperty(volproperty);                //è¯¥å‡½æ•°ç”¨äºŽè®¾ç½®vtkVolumePropertyå¯¹è±¡ã€‚å…¶ä¸­vtkVolumePropertyç”¨æ¥è®¾ç½®ä½“ç»˜åˆ¶çš„é¢œè‰²å’Œä¸é€æ˜Žåº¦å‡½æ•°ä»¥åŠé˜´å½±ä¿¡æ¯ã€‚
 	mpVolume->Update();
 
 	mpRenderer = vtkRenderer::New();
@@ -168,38 +168,38 @@ void MainWindow::renderWindow()
 
 	vtkMarchingCubes* boneExtractor = vtkMarchingCubes::New();
 	boneExtractor->SetInputConnection(Dcmreader->GetOutputPort());
-	boneExtractor->SetValue(0, 200); //ÉèÖÃÌáÈ¡µÄµÈÖµÐÅÏ¢
+	boneExtractor->SetValue(0, 200); //è®¾ç½®æå–çš„ç­‰å€¼ä¿¡æ¯
 
-	 //ÌÞ³ý¾ÉµÄ»ò·Ï³ýµÄÊý¾Ýµ¥Ôª£¬Ìá¸ß»æÖÆËÙ¶È
-	vtkStripper *boneStripper = vtkStripper::New(); //Èý½Ç´øÁ¬½Ó
-    //×¢Òâ£ºvtk6.0ÒÔºóµÄ°æ±¾£¬¹ÜµÀµÄÁ¬½Óº¯ÊýÐÞ¸ÄÎªÁËSetInputConnection()ºÍGetOutputPort().
+	 //å‰”é™¤æ—§çš„æˆ–åºŸé™¤çš„æ•°æ®å•å…ƒï¼Œæé«˜ç»˜åˆ¶é€Ÿåº¦
+	vtkStripper *boneStripper = vtkStripper::New(); //ä¸‰è§’å¸¦è¿žæŽ¥
+    //æ³¨æ„ï¼švtk6.0ä»¥åŽçš„ç‰ˆæœ¬ï¼Œç®¡é“çš„è¿žæŽ¥å‡½æ•°ä¿®æ”¹ä¸ºäº†SetInputConnection()å’ŒGetOutputPort().
 	boneStripper->SetInputConnection(boneExtractor->GetOutputPort());
 
-	//½¨Á¢Ó³Éä
+	//å»ºç«‹æ˜ å°„
 	vtkPolyDataMapper *boneMapper = vtkPolyDataMapper::New();
-	//×¢Òâ£ºvtk6.0ÒÔºóµÄ°æ±¾£¬¹ÜµÀµÄÁ¬½Óº¯ÊýÐÞ¸ÄÎªÁËSetInputConnection()ºÍGetOutputPort().
+	//æ³¨æ„ï¼švtk6.0ä»¥åŽçš„ç‰ˆæœ¬ï¼Œç®¡é“çš„è¿žæŽ¥å‡½æ•°ä¿®æ”¹ä¸ºäº†SetInputConnection()å’ŒGetOutputPort().
 	boneMapper->SetInputConnection(boneStripper->GetOutputPort());
 	
-	//½¨Á¢½ÇÉ«
+	//å»ºç«‹è§’è‰²
 	vtkActor *bone = vtkActor::New();
 	bone->SetMapper(boneMapper);
 	bone->GetProperty()->SetColor(191.0 / 255.0, 200.0 / 255.0, 200.0 / 255.0);
 	bone->GetProperty()->SetSpecular(.3);
 	bone->GetProperty()->SetSpecularPower(20);
 	
-	//±ê×¼¾ä×Ó
-	//¶¨Òå»æÖÆÆ÷
+	//æ ‡å‡†å¥å­
+	//å®šä¹‰ç»˜åˆ¶å™¨
 	mpRenderer = vtkRenderer::New();
-	//¶¨Òå»æÖÆ´°¿Ú
+	//å®šä¹‰ç»˜åˆ¶çª—å£
 	vtkRenderWindow *renWin = vtkRenderWindow::New();
 	renWin->AddRenderer(mpRenderer);
-	//¶¨Òå´°¿Ú½»»¥Æ÷
+	//å®šä¹‰çª—å£äº¤äº’å™¨
 	vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
 	iren->SetRenderWindow(renWin);
 	vtkInteractorStyleTrackballCamera*style = vtkInteractorStyleTrackballCamera::New();
 	iren->SetInteractorStyle(style);
 
-	//´´½¨Ò»¸öcamera
+	//åˆ›å»ºä¸€ä¸ªcamera
 	vtkCamera *aCamera = vtkCamera::New();
 	aCamera->SetViewUp(0, 0, -1);
 	aCamera->SetPosition(0, 1, 0);
