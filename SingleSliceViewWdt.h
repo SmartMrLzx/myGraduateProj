@@ -11,7 +11,7 @@
 
 
 
-class SingleSliceViewWdt : public QWidget             //ÇĞÃæÊÓÍ¼²¿¼ş
+class SingleSliceViewWdt : public QWidget             //åˆ‡é¢è§†å›¾éƒ¨ä»¶
 {
 	Q_OBJECT
 
@@ -22,33 +22,33 @@ public:
 
 protected:
 
-	void SetVolumeData(DICOMPropertyData* mpDicomImgPty);            //ÉèÖÃÌåÊı¾İ
-	void CreateWdts();                                               //´´½¨²¿¼ş
-	void resizeEvent(QResizeEvent* event);                           //ÖØ¶¨Òå´óĞ¡
-	void paintEvent(QPaintEvent* event);                             //»æÖÆ
+	void SetVolumeData(DICOMPropertyData* mpDicomImgPty);            //è®¾ç½®ä½“æ•°æ®
+	void CreateWdts();                                               //åˆ›å»ºéƒ¨ä»¶
+	void resizeEvent(QResizeEvent* event);                           //é‡å®šä¹‰å¤§å°
+	void paintEvent(QPaintEvent* event);                             //ç»˜åˆ¶
 
-	uchar* GetDcmImage(T_DImgPropety *pty,                           //¶ÁÈ¡DCMÍ¼Ïñ
+	uchar* GetDcmImage(T_DImgPropety *pty,                           //è¯»å–DCMå›¾åƒ
 					   T_DImageWindowCtrl *mPtDcmPty);
 
-	uchar DataExchange(float temp);                                  //Êı¾İ×ª»»
+	uchar DataExchange(float temp);                                  //æ•°æ®è½¬æ¢
 
 
-	void ProSliderValueChangeEvent(int val);                         //»¬¿éÖµ±ä»¯
+	void ProSliderValueChangeEvent(int val);                         //æ»‘å—å€¼å˜åŒ–
 
 private:
-	QSlider* mpScrollNextImgSlider;            //»¬¿é
-	QLabel* mpInfoLbl;                         //±êÇ©
+	QSlider* mpScrollNextImgSlider;            //æ»‘å—
+	QLabel* mpInfoLbl;                         //æ ‡ç­¾
 	QLabel* mpSliceImg;                        
 
 	//int16* mpVolumeDataPtr;
-	T_DImgPropety mProperty;             //DICOMÍ¼ÏñÊôĞÔ               
-	T_DImageWindowCtrl mPtDcmPty;
-	QImage* mpCellSliceImg;              //ÇĞÃæimage
+	T_DImgPropety mProperty;             //DICOMå›¾åƒå±æ€§               
+	T_DImageWindowCtrl mPtDcmPty;        //DICOMå›¾åƒçª—ä½çª—å®½æ§åˆ¶
+	QImage* mpCellSliceImg;              //åˆ‡é¢image
 
-	DICOMPropertyData* m_pDicomImgPty;
+	DICOMPropertyData* m_pDicomImgPty;   //DICOMå›¾åƒæ•°æ®
 
-	T_2DWdt_Type mWdtType;        //µ±Ç°2D²¿¼şµÄÀàĞÍ
+	T_2DWdt_Type mWdtType;        //å½“å‰2Déƒ¨ä»¶çš„ç±»å‹
 
-	bool isUpdateSlice;        //¼ì²éÊÇ·ñ¸üĞÂÇĞÃæ
+	bool isUpdateSlice;        //æ£€æŸ¥æ˜¯å¦æ›´æ–°åˆ‡é¢
 
 };
