@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 	QByteArray ba = str.toLatin1();
 	mInfoDir = ba.data();
 	mpDicomImgPty = new DICOMPropertyData;                //创建体素数据指针变量
-	DcmReadInterface::DcmReader(mInfoDir);                //使用DcmReader载入路径
+	DcmReadInterface::DcmReader(mInfoDir);                //读取dcm文件
 	DcmReadInterface::GetPatientInfo(*mpDicomImgPty);     //获取病人信息
 	DcmReadInterface::GetVolumeData(*mpDicomImgPty);      //获取体素数据
 	
