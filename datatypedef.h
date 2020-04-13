@@ -2,13 +2,13 @@
 
 #include "DcmReadInterface.h"
 
-enum T_2DWdt_Type {           //2D²¿¼şµÄÀàĞÍ
+enum T_2DWdt_Type {           //2Déƒ¨ä»¶çš„ç±»å‹
 	C_Axial = 0,
 	C_Coronal = 1,
 	C_Sagittal = 2,
 };
 
-//²»Í¸Ã÷¶È²ÎÊı
+//ä¸é€æ˜åº¦å‚æ•°
 enum OpacityParameter
 {
 	CT_OpacityValue = 0,
@@ -23,19 +23,26 @@ typedef float real32;
 
 struct T_DImgPropety {           //DICOM Image Propety
 
-	quint16 width;         //¿í¶È
-	quint16 height;        //¸ß¶È
-	qint16 order;          //´ÎĞò
-	quint16 total;         //×ÜÇĞÃæÊı
-	T_2DWdt_Type imgtype;  //ËùÊôÇĞÃæÀàĞÍ
+	quint16 width;         //å®½åº¦
+	quint16 height;        //é«˜åº¦
+	qint16 order;          //æ¬¡åº
+	quint16 total;         //æ€»åˆ‡é¢æ•°
+	T_2DWdt_Type imgtype;  //æ‰€å±åˆ‡é¢ç±»å‹
 
 };
 
-struct T_DImageWindowCtrl {               //DICOMÍ¼Ïñ´°¿Ú¿ØÖÆ
+struct T_DImageWindowCtrl {               //DICOMå›¾åƒçª—å£æ§åˆ¶
 
-	int16    windowCenter;		//´°Î»
-	int16    windowWidth;		//´°¿í
-	real32   rescaleIntercept;	//»Ò¶È×ªHUÖµµÄ½Ø¾à
-	real32   rescaleSlope;		//»Ò¶È×ªHUÖµµÄĞ±ÂÊ
+	int16    windowCenter;		//çª—ä½
+	int16    windowWidth;		//çª—å®½
+	real32   rescaleIntercept;	//ç°åº¦è½¬HUå€¼çš„æˆªè·
+	real32   rescaleSlope;		//ç°åº¦è½¬HUå€¼çš„æ–œç‡
+	
+	/********************************
+	
+	åƒç´ å€¼è½¬ä¸ºç°åº¦å€¼å…¬å¼ï¼š
+	Hu = pixel * Slope + Intercept
+	
+	*********************************/
 
 };
