@@ -40,7 +40,7 @@ struct T_DImageWindowCtrl {               //DICOM图像窗口控制
 	
 	/********************************
 	
-	像素值转为灰度值公式：
+	像素值转为CT值公式：
 	Hu = pixel * Slope + Intercept
 	
 	*********************************/
