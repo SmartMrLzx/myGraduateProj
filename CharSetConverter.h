@@ -7,9 +7,9 @@
 class CharSetConverter
 {
 public:
-	CharSetConverter()
+	CharSetConverter()                  //charå­—ç¬¦ä¸²è½¬æ¢å™¨
 	{
-		this->m_Ansi = NULL;
+		this->m_Ansi = NULL;        
 		this->m_Utf8 = NULL;
 		this->m_Unicode = NULL;
 	}
@@ -21,7 +21,7 @@ public:
 	void WcharToChar(const wchar_t *wchr, char *chr)
 	{
 
-		// WideCharToMultiByte ·µ»Ø³¤¶È²»°üÀ¨×Ö·û´®ÖÕÖ¹·û£¨'\0'£©
+		// WideCharToMultiByte è¿”å›é•¿åº¦ä¸åŒ…æ‹¬å­—ç¬¦ä¸²ç»ˆæ­¢ç¬¦ï¼ˆ'\0'ï¼‰
         int len = WideCharToMultiByte(CP_ACP,0,wchr,(int)wcslen(wchr),NULL,0,NULL,NULL);
 		if(0 == len)
 		{
@@ -33,10 +33,10 @@ public:
 	}
 
 	
-	// char* ×ª»»Îª wchar_t*
+	// char* è½¬æ¢ä¸º wchar_t*
 	void CharToWchar(const char *chr,wchar_t *wchr)
 	{
-		// MultiByteToWideChar ·µ»Ø³¤¶È²»°üÀ¨×Ö·û´®ÖÕÖ¹·û£¨'\0'£©
+		// MultiByteToWideChar è¿”å›é•¿åº¦ä¸åŒ…æ‹¬å­—ç¬¦ä¸²ç»ˆæ­¢ç¬¦ï¼ˆ'\0'ï¼‰
         int len = MultiByteToWideChar(CP_ACP,0,chr,(int)strlen(chr),NULL,0);
 		if(0 == len)
 		{
@@ -151,9 +151,9 @@ protected:
 	}
 
 private:
-	char *m_Ansi;
-	char *m_Utf8;
-	wchar_t *m_Unicode;
+	char *m_Ansi;               //ANSIç 
+	char *m_Utf8;               //UTF8ç 
+	wchar_t *m_Unicode;         //Unicodeç 
 
 };
 
