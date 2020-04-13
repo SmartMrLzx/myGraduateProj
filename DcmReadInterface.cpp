@@ -12,7 +12,7 @@ void DcmReadInterface::DcmReader(const char* dir)               //创建dcm阅�
 	DSR_CreateDicomSeriesReaderObj();                               //创建Dicom序列阅读器对象
 	DSR_SetDicomSeriesReaderDir(Converter.AnsiToUnicode(dir));      //设置Dicom序列阅读器路径
 
-	DSR_ReadDicomSeries(NULL);          //读取Dicom序列
+	DSR_ReadDicomSeries(NULL);          //清空已读dicom序列
 }
 
 void DcmReadInterface::GetPatientInfo(DSR_VolumeInfo &pVolumeInfo)      //获取病人信息
