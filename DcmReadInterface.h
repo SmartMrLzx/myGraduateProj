@@ -4,24 +4,24 @@
 #include "GDCM/DSReaderAPI.h"
 #include "GDCM/CharSetConverter.h"
 
-typedef DSR_VolumeInfo DICOMPropertyData;
+typedef DSR_VolumeInfo DICOMPropertyData;                    //å°†DSR_VolumeInfoä½“ç´ ä¿¡æ¯å®šä¹‰ä¸ºDICOMPropertyData
 
-class DcmReadInterface             //DCMÎÄ¼ş¶ÁÈ¡½Ó¿Ú
+class DcmReadInterface             //DCMæ–‡ä»¶è¯»å–æ¥å£
 {
 
 public:
 	DcmReadInterface();
 	~DcmReadInterface();
 
-	static void DcmReader(const char *dir);                   //DCMÎÄ¼ş¶ÁÈ¡Æ÷
+	static void DcmReader(const char *dir);                   //DCMæ–‡ä»¶è¯»å–å™¨
 
-	static void GetPatientInfo(DSR_VolumeInfo &pVolumeInfo);  //¶ÁÈ¡²¡ÈËĞÅÏ¢
+	static void GetPatientInfo(DSR_VolumeInfo &pVolumeInfo);  //è¯»å–ç—…äººä¿¡æ¯
 
-	static void GetOneImgData(DSR_VolumeInfo &pVolumeInfo);   //¶ÁÈ¡Ò»ÕÅÍ¼Ïñ
+	static void GetOneImgData(DSR_VolumeInfo &pVolumeInfo);   //è¯»å–ä¸€å¼ å›¾åƒ
 
-	static void GetVolumeData(DSR_VolumeInfo &pVolumeInfo);   //¶ÁÈ¡ÌåÊı¾İ
+	static void GetVolumeData(DSR_VolumeInfo &pVolumeInfo);   //è¯»å–ä½“æ•°æ®
 
-	static void DeleteDcmReader();                            //É¾³ıDCMÎÄ¼ş¶ÁÈ¡Æ÷
+	static void DeleteDcmReader();                            //åˆ é™¤DCMæ–‡ä»¶è¯»å–å™¨
 
 
 
